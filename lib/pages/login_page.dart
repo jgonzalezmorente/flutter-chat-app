@@ -1,3 +1,4 @@
+import 'package:chat/services/socket_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chat/services/auth_service.dart';
@@ -61,7 +62,8 @@ class __FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
 
-    final authService = Provider.of<AuthService>( context );
+    final authService   = Provider.of<AuthService>( context );
+    final socketService = Provider.of<SocketService>( context );
 
     return Container(
       margin: EdgeInsets.only( top: 40 ),
@@ -94,6 +96,7 @@ class __FormState extends State<_Form> {
               );
 
               if ( loginOk ) {
+                socketService.connect();
                 Navigator.pushReplacementNamed(context, 'usuarios');
               } else {
                 mostrarAlerta( context, 'Login incorrecto', 'Revise sus credenciales nuevamente' );
